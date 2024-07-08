@@ -1,0 +1,16 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/amartyakarmakar/Desktop/BankAccount/BankAccount'
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _gotoxy, symObjAddr: 0x0, symBinAddr: 0x100002964, symSize: 0x50 }
+  - { offsetInCU: 0x5A, offset: 0x5A, size: 0x8, addend: 0x0, symName: _gotoxy, symObjAddr: 0x0, symBinAddr: 0x100002964, symSize: 0x50 }
+  - { offsetInCU: 0x8C, offset: 0x8C, size: 0x8, addend: 0x0, symName: _getch, symObjAddr: 0x50, symBinAddr: 0x1000029B4, symSize: 0xB8 }
+  - { offsetInCU: 0xD1, offset: 0xD1, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x108, symBinAddr: 0x100002A6C, symSize: 0x10C }
+  - { offsetInCU: 0xF9, offset: 0xF9, size: 0x8, addend: 0x0, symName: _account, symObjAddr: 0x214, symBinAddr: 0x100002B78, symSize: 0x30C }
+  - { offsetInCU: 0x169, offset: 0x169, size: 0x8, addend: 0x0, symName: _login, symObjAddr: 0x520, symBinAddr: 0x100002E84, symSize: 0x1FC }
+  - { offsetInCU: 0x1E4, offset: 0x1E4, size: 0x8, addend: 0x0, symName: _accountcreated, symObjAddr: 0x71C, symBinAddr: 0x100003080, symSize: 0x94 }
+  - { offsetInCU: 0x216, offset: 0x216, size: 0x8, addend: 0x0, symName: _display, symObjAddr: 0x7B0, symBinAddr: 0x100003114, symSize: 0x2F0 }
+  - { offsetInCU: 0x266, offset: 0x266, size: 0x8, addend: 0x0, symName: _checkbalance, symObjAddr: 0xAB0, symBinAddr: 0x100003414, symSize: 0x188 }
+  - { offsetInCU: 0x2C8, offset: 0x2C8, size: 0x8, addend: 0x0, symName: _transfermoney, symObjAddr: 0xC38, symBinAddr: 0x10000359C, symSize: 0x2C0 }
+  - { offsetInCU: 0x35C, offset: 0x35C, size: 0x8, addend: 0x0, symName: _logout, symObjAddr: 0xEF8, symBinAddr: 0x10000385C, symSize: 0xE8 }
+...
