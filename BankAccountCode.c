@@ -8,17 +8,6 @@
 #else
 #include <unistd.h>
 #include <termios.h>
-int getch(void) {
-    struct termios oldt, newt;
-    int ch;
-    tcgetattr(STDIN_FILENO, &oldt);
-    newt = oldt;
-    newt.c_lflag &= ~(ICANON | ECHO);
-    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-    ch = getchar();
-    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-    return ch;
-}
 #endif
 
 void checkbalance(char*);
@@ -33,7 +22,7 @@ struct pass {
     char username[50];
     int date, month, year;
     char pnumber[15];
-    char adharnum[20];
+    char dlnum[20]; // Changed from adharnum to dlnum
     char fname[20];
     char lname[20];
     char fathname[20];
@@ -55,7 +44,7 @@ struct userpass {
 int main() {
     int choice;
 
-    printf("WELCOME TO THE BHUSHAN URBAN CO-OPERATIVE BANK LTD. INTERNET BANKING SYSTEM\n\n");
+    printf("WELCOME TO AMARTYA'S BANK PVT LTD. INTERNET BANKING SYSTEM\n\n");
     printf("******************************************************************************\n");
     printf("1.... CREATE A BANK ACCOUNT\n");
     printf("2.... ALREADY A USER? SIGN IN\n");
@@ -85,8 +74,6 @@ int main() {
 
 void account(void) {
     char password[50];
-    int i;
-    char ch;
     FILE *fp;
     struct pass u1;
     struct userpass p1;
@@ -120,8 +107,8 @@ void account(void) {
     printf("DATE OF BIRTH (DD MM YYYY): ");
     scanf("%d %d %d", &u1.date, &u1.month, &u1.year);
 
-    printf("ADHAR NUMBER: ");
-    scanf("%s", u1.adharnum);
+    printf("DRIVERS LICENSE NUMBER: ");
+    scanf("%s", u1.dlnum);
 
     printf("PHONE NUMBER: ");
     scanf("%s", u1.pnumber);
@@ -130,14 +117,7 @@ void account(void) {
     scanf("%s", u1.username);
 
     printf("PASSWORD: ");
-
-    for (i = 0; i < 50; i++) {
-        ch = getch();
-        if (ch == '\n') break;
-        password[i] = ch;
-        printf("*");
-    }
-    password[i] = '\0';
+    scanf("%s", password);
     strcpy(p1.password, password);
 
     fwrite(&u1, sizeof(u1), 1, fp);
@@ -156,15 +136,14 @@ void accountcreated(void) {
 
     printf("ACCOUNT CREATED SUCCESSFULLY....\n");
     printf("Press enter to login");
-    getch();
+    getchar(); // Consume the newline character left by scanf
+    getchar(); // Wait for user to press enter
     login();
 }
 
 void login(void) {
     char username[50];
     char password[50];
-    int i;
-    char ch;
     FILE *fp;
     struct pass u1;
     struct userpass p1;
@@ -180,14 +159,7 @@ void login(void) {
     scanf("%s", username);
 
     printf("PASSWORD: ");
-
-    for (i = 0; i < 50; i++) {
-        ch = getch();
-        if (ch == '\n') break;
-        password[i] = ch;
-        printf("*");
-    }
-    password[i] = '\0';
+    scanf("%s", password);
 
     while (fread(&u1, sizeof(u1), 1, fp)) {
         fread(&p1, sizeof(p1), 1, fp);
@@ -215,21 +187,23 @@ void display(char username1[]) {
 
     while (fread(&u1, sizeof(u1), 1, fp)) {
         if (strcmp(username1, u1.username) == 0) {
-            printf("WELCOME, %s %s\n", u1.fname, u1.lname);
+            printf("\nWELCOME, %s %s\n", u1.fname, u1.lname);
+            printf("=====================================\n");
             printf("NAME: %s %s\n", u1.fname, u1.lname);
             printf("FATHER's NAME: %s\n", u1.fathname);
             printf("MOTHER's NAME: %s\n", u1.mothname);
-            printf("ADHAR CARD NUMBER: %s\n", u1.adharnum);
+            printf("DRIVERS LICENSE NUMBER: %s\n", u1.dlnum);
             printf("MOBILE NUMBER: %s\n", u1.pnumber);
             printf("DATE OF BIRTH: %d-%d-%d\n", u1.date, u1.month, u1.year);
             printf("ADDRESS: %s\n", u1.address);
             printf("ACCOUNT TYPE: %s\n", u1.typeaccount);
+            printf("=====================================\n");
         }
     }
 
     fclose(fp);
 
-    printf(" HOME \n");
+    printf("\n HOME \n");
     printf("1....CHECK BALANCE\n");
     printf("2....TRANSFER MONEY\n");
     printf("3....LOG OUT\n");
@@ -313,12 +287,11 @@ void transfermoney(void) {
     }
 
     printf("\nAMOUNT SUCCESSFULLY TRANSFERRED....\n");
-    getch();
 
     fclose(fp);
     fclose(fm);
 
-        display(usernamet);
+    display(usernamet);
 }
 
 void checkbalance(char username2[]) {
@@ -345,9 +318,8 @@ void checkbalance(char username2[]) {
 
     printf("TOTAL AMOUNT: %d\n", summoney);
 
-    getch();
     fclose(fm);
-    display(username2);
+    display(username2    );
 }
 
 void logout(void) {
@@ -364,19 +336,8 @@ void logout(void) {
     }
 
     printf("\nSign out successfully..\n");
-    printf("press any key to continue..");
+    printf("Press enter to continue..");
 
-    getch();
-}
-
-int getch(void) {
-    struct termios oldt, newt;
-    int ch;
-    tcgetattr(STDIN_FILENO, &oldt);
-    newt = oldt;
-    newt.c_lflag &= ~(ICANON | ECHO);
-    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-    ch = getchar();
-    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-    return ch;
+    getchar(); // Consume the newline character left by previous input
+    getchar(); // Wait for user to press enter
 }
